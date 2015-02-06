@@ -1,11 +1,5 @@
-def every_possible_pairing_of_students(array)
-  result = Array.new
-  array.each.with_index do |x, i|
-    for a in (i+1)..(array.length-1) do
-      result.push([x, array[a]])
-    end
-  end
-  puts result
+def shortest_word_in_array(array)
+  array.sort_by {|i| [i.length, i.last]}.reverse
 end
 
-n = every_possible_pairing_of_students(['Bob', 'Dave', 'Clive'])
+n = shortest_word_in_array %w(here is a bunch of words of different lengths)

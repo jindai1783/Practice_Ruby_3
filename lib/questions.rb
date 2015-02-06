@@ -54,22 +54,29 @@ end
 
 # add an element to the beginning of an array
 def add_element_to_beginning_of_array(array, element)
+  array.insert(0, element)
 end
 
 # sort an array of words by their last letter, e.g.
 # ['sky', 'puma', 'maker'] becomes ['puma', 'maker', 'sky']
 def array_sort_by_last_letter_of_word(array)
+  array.map! {|x| x.reverse}
+  array.sort!
+  array.map! {|x| x.reverse}
 end
 
 # cut strings in half, and return the first half, e.g.
 # 'banana' becomes 'ban'. If the string is an odd number of letters
 # round up - so 'apple' becomes 'app'
 def get_first_half_of_string(string)
+  string[0..(string.length-1)/2]
 end
 
 # turn a positive integer into a negative integer. A negative integer
 # stays negative
 def make_numbers_negative(number)
+  number *= -1 if "++-"[number <=> 0] == "+"
+  number
 end
 
 # turn an array of numbers into two arrays of numbers, one an array of 
@@ -77,6 +84,12 @@ end
 # even numbers come first
 # so [1, 2, 3, 4, 5, 6] becomes [[2, 4, 6], [1, 3, 5]]
 def separate_array_into_even_and_odd_numbers(array)
+  even = Array.new
+  odd = Array.new
+  array.each do |x|
+    x.odd? ? odd.push(x) : even.push(x)
+  end
+  [even, odd]
 end
 
 # count the numbers of elements in an element which are palindromes
@@ -84,33 +97,44 @@ end
 # e.g. 'bob'. So in the array ['bob', 'radar', 'eat'], there
 # are 2 palindromes (bob and radar), so the method should return 2
 def number_of_elements_that_are_palindromes(array)
+  number = 0
+  array.each do |x|
+    number += 1 if x.reverse == x
+  end
+  number
 end
 
 # return the shortest word in an array
 def shortest_word_in_array(array)
+  array.sort_by(&:length)[0]
 end
 
 # return the shortest word in an array
 def longest_word_in_array(array)
+  array.sort_by(&:length).reverse[0]
 end
 
 # add up all the numbers in an array, so [1, 3, 5, 6]
 # returns 15
 def total_of_array(array)
+  array.inject {|sum, n| sum + n}
 end
 
 # turn an array into itself repeated twice. So [1, 2, 3]
 # becomes [1, 2, 3, 1, 2, 3]
 def double_array(array)
+  array.concat(array)
 end
 
 # convert a symbol into a string
 def turn_symbol_into_string(symbol)
+  symbol.to_s
 end
 
 # get the average from an array, rounded to the nearest integer
 # so [10, 15, 25] should return 33
 def average_of_array(array)
+  (1.0*array.inject{|sum, n| sum + n}/array.length).round(0)
 end
 
 # get all the elements in an array, up until the first element
@@ -118,12 +142,22 @@ end
 # [1, 3, 5, 4, 1, 2, 6, 2, 1, 3, 7]
 # becomes [1, 3, 5, 4, 1, 2]
 def get_elements_until_greater_than_five(array)
+  result = Array.new
+  array.each {|x| x <= 5 ? result.push(x) : break}
+  result
 end
 
 # turn an array (with an even number of elements) into a hash, by
 # pairing up elements. e.g. ['a', 'b', 'c', 'd'] becomes
 # {'a' => 'b', 'c' => 'd'}
 def convert_array_to_a_hash(array)
+  result = {}
+  array.each.with_index do |x, i|
+    if !i.odd?
+      result.store(x, array[i+1])
+    end
+  end
+  result
 end
 
 # get all the letters used in an array of words and return
