@@ -290,12 +290,10 @@ end
 # the list of bank holidays is here:
 # https://www.gov.uk/bank-holidays
 def is_a_2014_bank_holiday?(date)
-  bank_holiday = [
-    Time.new(2014, 8, 25),
-    Time.new(2014, 4, 3),
-    Time.new(2014, 4, 6)
-  ]
-  bank_holiday.include?(date)
+  require 'open-uri'
+  content = open("https://www.gov.uk/bank-holidays.json").read
+  formated_date = date.strftime("%Y-%m-%d")
+  content.include?(formated_date)
 end
 
 # given your birthday this year, this method tells you
@@ -341,4 +339,14 @@ end
 # at the end.
 # (there's no RSpec test for this one)
 def ninety_nine_bottles_of_beer
+  for i in 1..98
+    puts "#{100 - i} bottles of beer on the wall, #{100 - i} bottles of beer."
+    puts "Take one down and pass it around, #{99 - i} bottles of beer on the wall."
+    puts ""
+  end
+  puts "1 bottle of beer on the wall, 1 bottle of beer."
+  puts "Take one down and pass it around, no more bottles of beer on the wall."
+  puts ""
+  puts "No more bottles of beer on the wall, no more bottles of beer."
+  puts "Go to the store and buy some more, 99 bottles of beer on the wall."
 end
