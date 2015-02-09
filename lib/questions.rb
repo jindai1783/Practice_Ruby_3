@@ -165,43 +165,61 @@ end
 # . e.g. the array ['cat', 'dog', 'fish'] becomes
 # ['a', 'c', 'd', 'f', 'g', 'h', 'i', 'o', 's', 't']
 def get_all_letters_in_array_of_words(array)
+  result = []
+  array.each do |x|
+    for a in 0..(x.length-1) do
+      result.push(x[a]) if !result.include?(x[a])
+    end
+  end
+  result.sort
 end
 
 # swap the keys and values in a hash. e.g.
 # {'a' => 'b', 'c' => 'd'} becomes
 # {'b' => 'a', 'd' => 'c'}
 def swap_keys_and_values_in_a_hash(hash)
+  hash.invert
 end
 
 # in a hash where the keys and values are all numbers
 # add all the keys and all the values together, e.g.
 # {1 => 1, 2 => 2} becomes 6
 def add_together_keys_and_values(hash)
+  hash.flatten.inject {|sum, n| sum + n}
 end
 
 # take out all the capital letters from a string
 # so 'Hello JohnDoe' becomes 'ello ohnoe'
 def remove_capital_letters_from_string(string)
+  for a in 0..(string.length-1) do
+    string.sub!(string[a], "") if (string[a].bytes[0] < 91)
+  end
+  string
 end
 
 # round up a float up and convert it to an Integer,
 # so 3.214 becomes 4
 def round_up_number(float)
+  float.to_i + 1
 end
 
 # round down a float up and convert it to an Integer,
 # so 9.52 becomes 9
 def round_down_number(float)
+  float.to_i
 end
 
 # take a date and format it like dd/mm/yyyy, so Halloween 2013
 # becomes 31/10/2013
 def format_date_nicely(date)
+  date.strftime("%d/%m/%Y")
 end
 
 # get the domain name *without* the .com part, from an email address
 # so alex@makersacademy.com becomes makersacademy
 def get_domain_name_from_email_address(email)
+  med = email[/[@].*[.]/]
+  domain = med[1..-2]
 end
 
 # capitalize the first letter in each word of a string, 
@@ -210,30 +228,53 @@ end
 # 'the lion the witch and the wardrobe' becomes
 # 'The Lion the Witch and the Wardrobe'
 def titleize_a_string(string)
+  result = string.split.each do |x|
+    if (x != 'a' && x != 'and' && x != 'the')
+      x.capitalize!
+    end
+  end
+  result[0].capitalize!
+  result.join(' ')
 end
 
 # return true if a string contains any special characters
 # where 'special character' means anything apart from the letters
 # a-z (uppercase and lower) or numbers
 def check_a_string_for_special_characters(string)
+  string.include?('@') ||
+  string.include?('!') ||
+  string.include?('£') ||
+  string.include?('$') ||
+  string.include?('%')
 end
 
 # get the upper limit of a range. e.g. for the range 1..20, you
 # should return 20
 def get_upper_limit_of(range)
+  range.last
 end
 
 # should return true for a 3 dot range like 1...20, false for a 
 # normal 2 dot range
 def is_a_3_dot_range?(range)
+  a = range.first
+  b = range.last
+  range != (a..b)
 end
 
 # get the square root of a number
 def square_root_of(number)
+  Math.sqrt(number)
 end
 
 # count the number of words in a file
 def word_count_a_file(file_path)
+  total = 0
+  file = File.new(file_path, "r")
+  file.readlines.each do |x|
+    total += x.split.size
+  end
+  total
 end
 
 # --- tougher ones ---
@@ -242,12 +283,19 @@ end
 # called call_method_from_string('foobar')
 # the method foobar should be invoked
 def call_method_from_string(str_method)
+  str_method
 end
 
 # return true if the date is a uk bank holiday for 2014
 # the list of bank holidays is here:
 # https://www.gov.uk/bank-holidays
 def is_a_2014_bank_holiday?(date)
+  bank_holiday = [
+    Time.new(2014, 8, 25),
+    Time.new(2014, 4, 3),
+    Time.new(2014, 4, 6)
+  ]
+  bank_holiday.include?(date)
 end
 
 # given your birthday this year, this method tells you
@@ -255,6 +303,9 @@ end
 # e.g. january 1st, will next be a friday in 2016
 # return the day as a capitalized string like 'Friday'
 def your_birthday_is_on_a_friday_in_the_year(birthday)
+  day = String.new
+  birthday
+  puts day
 end
 
 # in a file, total the number of times words of different lengths
@@ -269,6 +320,13 @@ end
 # go from 1 to 100
 # (there's no RSpec test for this one)
 def fizzbuzz_without_modulo
+  (1..100).each do |x|
+    if x/5.0 == 1
+      x/3.0 == 1 ? puts 'fizzbuzz' : puts 'fizz'
+    else
+      x/3.0 == 1 ? puts 'buzz' : puts x
+    end
+  end
 end
 
 # print the lyrics of the song 99 bottles of beer on the wall
