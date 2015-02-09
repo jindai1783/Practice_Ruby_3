@@ -320,11 +320,16 @@ end
 # go from 1 to 100
 # (there's no RSpec test for this one)
 def fizzbuzz_without_modulo
+  ints = []
+  for i in 1..50
+    ints.push(i)
+  end
+
   (1..100).each do |x|
-    if x/5.0 == 1
-      x/3.0 == 1 ? puts 'fizzbuzz' : puts 'fizz'
+    if ints.include?(x/5.0)
+      puts(ints.include?(x/3.0) ? 'fizzbuzz' : 'fizz')
     else
-      x/3.0 == 1 ? puts 'buzz' : puts x
+      puts(ints.include?(x/3.0) ? 'buzz' : x)
     end
   end
 end
