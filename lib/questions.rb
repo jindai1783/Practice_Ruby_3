@@ -301,10 +301,18 @@ end
 # e.g. january 1st, will next be a friday in 2016
 # return the day as a capitalized string like 'Friday'
 def your_birthday_is_on_a_friday_in_the_year(birthday)
-  day = String.new
-  birthday
-  puts day
+  month = birthday.strftime("%m").to_i
+  day = birthday.strftime("%d").to_i
+  year = birthday.strftime("%Y").to_i
+  loop do
+    year = year += 1
+    time = Time.new(year, month, day)
+    break if time.strftime("%u") == "5"
+  end
+  year
 end
+
+n = your_birthday_is_on_a_friday_in_the_year(Time.new(2013, 1, 1))
 
 # in a file, total the number of times words of different lengths
 # appear. So in a file with the text "the cat sat on the blue mat"
