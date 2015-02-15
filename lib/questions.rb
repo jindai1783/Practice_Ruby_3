@@ -1,15 +1,20 @@
 # keep only the elements that start with an a
 def select_elements_starting_with_a(array)
-  result = Array.new
-  array.each {|x| result.push(x) if x[0] == 'a'}
-  result
+  array.select {|x| x[0] == 'a'}
+
+  # array.keep_if {|a| a =~ }
 end
 
 # keep only the elements that start with a vowel
 def select_elements_starting_with_vowel(array)
-  result = Array.new
-  array.each {|x| result.push(x) if x[0] == 'a' || x[0] == 'e' || x[0] == 'i' || x[0] == 'o' || x[0] == 'u'}
-  result
+  # result = Array.new
+  # array.each {|x| result.push(x) if x[0] == 'a' || x[0] == 'e' || x[0] == 'i' || x[0] == 'o' || x[0] == 'u'}
+  # result
+
+  array.select {|x| x[0] =~ /^[aeiou]/}
+
+  # =~ /^[aeiou]/
+  # start_with?('a', 'e')
 end
 
 # remove instances of nil (but NOT false) from an array
@@ -17,6 +22,8 @@ def remove_nils_from_array(array)
   result = Array.new
   array.each {|x| result.push(x) if x != nil}
   result
+
+  # array.compact
 end
 
 # remove instances of nil AND false from an array
@@ -24,12 +31,14 @@ def remove_nils_and_false_from_array(array)
   result = Array.new
   array.each {|x| result.push(x) if x != nil && x != false}
   result
+
+  # array.select{|x| x}
 end
 
 # don't reverse the array, but reverse every word inside it. e.g.
 # ['dog', 'monkey'] becomes ['god', 'yeknom']
 def reverse_every_element_in_array(array)
-  array.map! {|x| x.reverse}
+  array.map(&:reverse)
 end
 
 # given an array of student names, like ['Bob', 'Dave', 'Clive']
@@ -44,6 +53,8 @@ def every_possible_pairing_of_students(array)
     end
   end
   result
+
+  # array.combination(2)
 end
 
 # discard the first 3 elements of an array, 
@@ -60,9 +71,7 @@ end
 # sort an array of words by their last letter, e.g.
 # ['sky', 'puma', 'maker'] becomes ['puma', 'maker', 'sky']
 def array_sort_by_last_letter_of_word(array)
-  array.map! {|x| x.reverse}
-  array.sort!
-  array.map! {|x| x.reverse}
+  array.map(&:reverse).sort.map(&:reverse)
 end
 
 # cut strings in half, and return the first half, e.g.
@@ -77,6 +86,8 @@ end
 def make_numbers_negative(number)
   number *= -1 if "++-"[number <=> 0] == "+"
   number
+
+  # -number.abs
 end
 
 # turn an array of numbers into two arrays of numbers, one an array of 
@@ -90,6 +101,8 @@ def separate_array_into_even_and_odd_numbers(array)
     x.odd? ? odd.push(x) : even.push(x)
   end
   [even, odd]
+  
+  # array.partition {|x| x.even?}
 end
 
 # count the numbers of elements in an element which are palindromes
@@ -102,11 +115,13 @@ def number_of_elements_that_are_palindromes(array)
     number += 1 if x.reverse == x
   end
   number
+  # array.count{|x| x==x.reverse }
 end
 
 # return the shortest word in an array
 def shortest_word_in_array(array)
-  array.sort_by(&:length)[0]
+  array.min_by(&:length)
+  # array.min_by { |x| x.length }
 end
 
 # return the shortest word in an array
@@ -117,7 +132,8 @@ end
 # add up all the numbers in an array, so [1, 3, 5, 6]
 # returns 15
 def total_of_array(array)
-  array.inject {|sum, n| sum + n}
+  array.inject(&:+)
+  # array.inject {|sum, n| sum + n}
 end
 
 # turn an array into itself repeated twice. So [1, 2, 3]
@@ -134,7 +150,7 @@ end
 # get the average from an array, rounded to the nearest integer
 # so [10, 15, 25] should return 33
 def average_of_array(array)
-  (1.0*array.inject{|sum, n| sum + n}/array.length).round(0)
+  (1.0*array.inject{|sum, ele| sum + ele}/array.length).round(0)
 end
 
 # get all the elements in an array, up until the first element
@@ -145,6 +161,8 @@ def get_elements_until_greater_than_five(array)
   result = Array.new
   array.each {|x| x <= 5 ? result.push(x) : break}
   result
+
+  # array.take_while
 end
 
 # turn an array (with an even number of elements) into a hash, by
@@ -158,6 +176,8 @@ def convert_array_to_a_hash(array)
     end
   end
   result
+
+  # Hash[*array]
 end
 
 # get all the letters used in an array of words and return
@@ -185,16 +205,18 @@ end
 # add all the keys and all the values together, e.g.
 # {1 => 1, 2 => 2} becomes 6
 def add_together_keys_and_values(hash)
-  hash.flatten.inject {|sum, n| sum + n}
+  hash.flatten.inject(:+)
 end
 
 # take out all the capital letters from a string
 # so 'Hello JohnDoe' becomes 'ello ohnoe'
 def remove_capital_letters_from_string(string)
-  for a in 0..(string.length-1) do
-    string.sub!(string[a], "") if (string[a].bytes[0] < 91)
-  end
-  string
+  # for a in 0..(string.length-1) do
+  #   string.sub!(string[a], "") if (string[a].bytes[0] < 91)
+  # end
+  # string
+
+  string.gsub(/[A-Z]/, "")
 end
 
 # round up a float up and convert it to an Integer,
@@ -283,7 +305,7 @@ end
 # called call_method_from_string('foobar')
 # the method foobar should be invoked
 def call_method_from_string(str_method)
-  str_method
+  str_method.method('str_method').call
 end
 
 # return true if the date is a uk bank holiday for 2014
@@ -312,14 +334,22 @@ def your_birthday_is_on_a_friday_in_the_year(birthday)
   year
 end
 
-n = your_birthday_is_on_a_friday_in_the_year(Time.new(2013, 1, 1))
-
 # in a file, total the number of times words of different lengths
 # appear. So in a file with the text "the cat sat on the blue mat"
 # I have 5 words which are 3 letters long, 1 which is 2 letters long
 # and 1 that is 4 letters long. Return it as a hash in the format
 # word_length => count, e.g. {2 => 1, 3 => 5, 4 => 1}
 def count_words_of_each_length_in_a_file(file_path)
+  total = {}
+  count = Array.new(20, 0)
+  file = File.new('data/' + file_path, "r")
+  file.readlines.each do |x|
+    x.split.each do |y|
+      count[y.length] += 1
+      total.store(y.length, count[y.length])
+    end
+  end
+  total
 end
 
 # implement fizzbuzz without modulo, i.e. the % method
