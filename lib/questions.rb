@@ -1,38 +1,22 @@
 # keep only the elements that start with an a
 def select_elements_starting_with_a(array)
   array.select {|x| x[0] == 'a'}
-
   # array.keep_if {|a| a =~ }
 end
 
 # keep only the elements that start with a vowel
 def select_elements_starting_with_vowel(array)
-  # result = Array.new
-  # array.each {|x| result.push(x) if x[0] == 'a' || x[0] == 'e' || x[0] == 'i' || x[0] == 'o' || x[0] == 'u'}
-  # result
-
   array.select {|x| x[0] =~ /^[aeiou]/}
-
-  # =~ /^[aeiou]/
-  # start_with?('a', 'e')
 end
 
 # remove instances of nil (but NOT false) from an array
 def remove_nils_from_array(array)
-  result = Array.new
-  array.each {|x| result.push(x) if x != nil}
-  result
-
-  # array.compact
+  array.compact
 end
 
 # remove instances of nil AND false from an array
 def remove_nils_and_false_from_array(array)
-  result = Array.new
-  array.each {|x| result.push(x) if x != nil && x != false}
-  result
-
-  # array.select{|x| x}
+  array.select{|x| x}
 end
 
 # don't reverse the array, but reverse every word inside it. e.g.
@@ -46,15 +30,7 @@ end
 # [['Bob', 'Clive'], ['Bob', 'Dave'], ['Clive', 'Dave']]
 # make sure you don't have the same pairing twice, 
 def every_possible_pairing_of_students(array)
-  result = Array.new
-  array.each.with_index do |x, i|
-    for a in (i+1)..(array.length-1) do
-      result.push([x, array[a]])
-    end
-  end
-  result
-
-  # array.combination(2)
+  array.combination(2)
 end
 
 # discard the first 3 elements of an array, 
@@ -95,14 +71,7 @@ end
 # even numbers come first
 # so [1, 2, 3, 4, 5, 6] becomes [[2, 4, 6], [1, 3, 5]]
 def separate_array_into_even_and_odd_numbers(array)
-  even = Array.new
-  odd = Array.new
-  array.each do |x|
-    x.odd? ? odd.push(x) : even.push(x)
-  end
-  [even, odd]
-  
-  # array.partition {|x| x.even?}
+  array.partition {|x| x.even?}
 end
 
 # count the numbers of elements in an element which are palindromes
@@ -110,12 +79,7 @@ end
 # e.g. 'bob'. So in the array ['bob', 'radar', 'eat'], there
 # are 2 palindromes (bob and radar), so the method should return 2
 def number_of_elements_that_are_palindromes(array)
-  number = 0
-  array.each do |x|
-    number += 1 if x.reverse == x
-  end
-  number
-  # array.count{|x| x==x.reverse }
+  array.count{|x| x==x.reverse}
 end
 
 # return the shortest word in an array
@@ -133,7 +97,6 @@ end
 # returns 15
 def total_of_array(array)
   array.inject(&:+)
-  # array.inject {|sum, n| sum + n}
 end
 
 # turn an array into itself repeated twice. So [1, 2, 3]
@@ -161,23 +124,13 @@ def get_elements_until_greater_than_five(array)
   result = Array.new
   array.each {|x| x <= 5 ? result.push(x) : break}
   result
-
-  # array.take_while
 end
 
 # turn an array (with an even number of elements) into a hash, by
 # pairing up elements. e.g. ['a', 'b', 'c', 'd'] becomes
 # {'a' => 'b', 'c' => 'd'}
 def convert_array_to_a_hash(array)
-  result = {}
-  array.each.with_index do |x, i|
-    if !i.odd?
-      result.store(x, array[i+1])
-    end
-  end
-  result
-
-  # Hash[*array]
+  Hash[*array]
 end
 
 # get all the letters used in an array of words and return
@@ -211,11 +164,6 @@ end
 # take out all the capital letters from a string
 # so 'Hello JohnDoe' becomes 'ello ohnoe'
 def remove_capital_letters_from_string(string)
-  # for a in 0..(string.length-1) do
-  #   string.sub!(string[a], "") if (string[a].bytes[0] < 91)
-  # end
-  # string
-
   string.gsub(/[A-Z]/, "")
 end
 
